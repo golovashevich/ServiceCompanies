@@ -5,6 +5,7 @@ using SC.Data.Models;
 namespace SC.Data {
 	public class SCContext : DbContext, ISCContext {
 		public SCContext() : base("name=scDB") {
+			Configuration.ProxyCreationEnabled = false;
 		}
 
 		public SCContext(bool MultipleActiveResultSets = false) {
