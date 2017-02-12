@@ -1,6 +1,6 @@
 USE ServiceCompanies
 
--- pp. 1-7 are workable. Uncomment appropriate SQL statement in order to see how it works
+-- pp. 1-9, 11-12 are workable. Uncomment appropriate SQL statement in order to see how it works
 
 ---- 1) Find all customers of the specified company.
 --DECLARE @companyID int
@@ -90,9 +90,57 @@ USE ServiceCompanies
 	
 --GROUP BY cust.CustomerID, cust.Name
 
--- 8) Find all clients that do not consume S1 service.
--- 9) Find all clients that consume S1 service but do not consume S2 service.
+---- 8) Find all clients that do not consume S1 service.
+--DECLARE @s1 INT
+--SET @s1 = 2 -- storage
+
+--SELECT cust.Name
+--FROM Customers cust
+--WHERE 
+--	cust.CustomerID NOT IN (
+--			SELECT custS.CustomerID 
+--			FROM 
+--				CustomerServices custS 
+--			WHERE
+--				custS.ServiceID = @s1
+--		)
+
+---- 9) Find all clients that consume S1 service but do not consume S2 service.
+--DECLARE @s1 INT
+--DECLARE @s2 INT
+
+--SET @s1 = 4 -- food
+--SET @s2 = 2 -- storage
+
+--SELECT cust.Name
+--FROM Customers cust
+--	JOIN CustomerServices custS ON custS.CustomerID = cust.CustomerID
+--WHERE 
+--	cust.CustomerID NOT IN (
+--			SELECT custS.CustomerID 
+--			FROM 
+--				CustomerServices custS 
+--			WHERE
+--				custS.ServiceID = @s2
+--		)
+--	AND
+--		custS.CustomerID = @s1
+
 -- 10) Find all clients of the specified company who consume the same services of the
 -- company (but may use different services of other companies).
--- 11) Find all clients who consume services provided only by one arbitrary company.
--- 12) Find all clients who consume services provided by only two different companies.
+
+---- 11) Find all clients who consume services provided only by one arbitrary company.
+--SELECT cust.Name
+--FROM Customers cust
+--	JOIN CustomerServices custS ON custS.CustomerID = cust.CustomerID
+--	JOIN [Services] serv ON serv.ServiceID = custS.ServiceID
+--GROUP BY cust.Name
+--HAVING COUNT(DISTINCT(serv.CompanyID)) = 2
+
+---- 12) Find all clients who consume services provided by only two different companies.
+--SELECT cust.Name
+--FROM Customers cust
+--	JOIN CustomerServices custS ON custS.CustomerID = cust.CustomerID
+--	JOIN [Services] serv ON serv.ServiceID = custS.ServiceID
+--GROUP BY cust.Name
+--HAVING COUNT(DISTINCT(serv.CompanyID)) = 2

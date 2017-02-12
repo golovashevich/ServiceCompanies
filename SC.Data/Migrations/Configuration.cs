@@ -24,12 +24,13 @@ namespace SC.Data.Migrations {
 			var ivan = new CustomerModel { Name = "Ivan Peters", ID = 150 };
 			var brice = new CustomerModel { Name = "Brice Lambson", ID = 200 };
 			var rowan = new CustomerModel { Name = "Rowan Miller", ID = 300 };
+			var steve = new CustomerModel { Name = "Steve Baker", ID = 400 };
 
 			// Dictionaries
 			context.Companies.AddOrUpdate(c => c.Name, foogle, foosoft, foodonalds);
 			context.Services.AddOrUpdate(s => s.Name, search, ad, storage, food);
-			context.Customers.AddOrUpdate(c => c.Name, andrew, ivan, brice, rowan, 
-					new CustomerModel { Name = "Lonely Heart", ID = 400 });
+			context.Customers.AddOrUpdate(c => c.Name, andrew, ivan, brice, rowan, steve,  
+					new CustomerModel { Name = "Lonely Heart", ID = 500 });
 
 			// Customer services
 			context.CustomerServices.AddOrUpdate(cs => new { cs.CustomerID, cs.ServiceID },
@@ -44,7 +45,13 @@ namespace SC.Data.Migrations {
 					new CustomerServiceModel { CustomerID = brice.ID, ServiceID = food.ID },
 					new CustomerServiceModel { CustomerID = brice.ID, ServiceID = storage.ID },
 
-					new CustomerServiceModel { CustomerID = rowan.ID, ServiceID = food.ID });
+					new CustomerServiceModel { CustomerID = rowan.ID, ServiceID = food.ID },
+
+					new CustomerServiceModel { CustomerID = steve.ID, ServiceID = food.ID },
+					new CustomerServiceModel { CustomerID = steve.ID, ServiceID = search.ID },
+					new CustomerServiceModel { CustomerID = steve.ID, ServiceID = ad.ID }
+				);
+
 		}
 	}
 }
